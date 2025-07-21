@@ -1,0 +1,8 @@
+.venv
+.env
+.chainlit
+v1/
+init.sql
+ris_cache.sqlite
+
+*.cpython-*

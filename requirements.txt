@@ -1,0 +1,8 @@
+chainlit==2.6.2
+dspy==2.6.27
+pgvector==0.4.1
+python-dotenv==1.1.1
+SQLAlchemy==2.0.41
+requests_cache==1.2.1
+lxml==6.0.0
+psycopg2-binary==2.9.10

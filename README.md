@@ -4,13 +4,13 @@ The `init.sql` file required for database initialization is **not included** in 
 
 Please download `init.sql` from the provided cloud storage link and place it in the project root directory:
 
-- [Download init.sql](YOUR_CLOUD_STORAGE_LINK_HERE)
+- [Download init.sql](https://drive.google.com/file/d/1p0VgDHZVYiHBNqqZFghk_gEKrQWgyWh1/view?usp=drive_link)
 
 After downloading, you can start the application as described below.
 
 ---
 
-# RIS RAG
+# Rechtsinformations­system(RIS) RAG
 
 RIS RAG is a Retrieval-Augmented Generation (RAG) application for legal document search and question answering, leveraging PostgreSQL with pgvector for vector search and LLMs for natural language understanding.
 

@@ -4,7 +4,7 @@ The `init.sql` file required for database initialization is **not included** in 
 
 Please download `init.sql` from the provided cloud storage link and place it in the project root directory:
 
-- [Download init.sql](https://drive.google.com/file/d/1p0VgDHZVYiHBNqqZFghk_gEKrQWgyWh1/view?usp=drive_link)
+- [Download init.sql](https://drive.google.com/file/d/1p0VgDHZVYiHBNqqZFghk_gEKrQWgyWh1/view?usp=sharing)
 
 After downloading, you can start the application as described below.
 

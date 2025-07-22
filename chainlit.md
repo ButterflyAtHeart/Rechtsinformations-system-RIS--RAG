@@ -1,14 +1,23 @@
-# Welcome to Chainlit! 🚀🤖
+# Chainlit App for RIS RAG
 
-Hi there, Developer! 👋 We're excited to have you on board. Chainlit is a powerful tool designed to help you prototype, debug and share applications built on top of LLMs.
+This Chainlit app provides a conversational interface for german legal document search and question answering using Retrieval-Augmented Generation (RAG).
 
-## Useful Links 🔗
+## Database
+As a database 2500 german law and executive orders were downloaded from [here](https://testphase.rechtsinformationen.bund.de/). After that they were parsed and inserted into a postresql database.
 
-- **Documentation:** Get started with our comprehensive [Chainlit Documentation](https://docs.chainlit.io) 📚
-- **Discord Community:** Join our friendly [Chainlit Discord](https://discord.gg/k73SQ3FyUh) to ask questions, share your projects, and connect with other developers! 💬
+## Models
+- **LLMs:**
+  - Llama-3 (via IONOS API)
+- **Embedding Model:**
+  - BGE-M3 (via IONOS API)
 
-We can't wait to see what you create with Chainlit! Happy coding! 💻😊
+These models enable semantic search and natural language understanding for legal queries.
 
-## Welcome screen
+## Capabilities
+- Secure user authentication
+- Natural language queries over German legal documents
+- References to relevant legal sources in responses
+- Powered by LLMs and vector search
 
-To modify the welcome screen, edit the `chainlit.md` file at the root of your project. If you do not want a welcome screen, just leave this file empty.
+## Source Code
+See the main application logic in [`Github`](https://github.com/ButterflyAtHeart/Rechtsinformations-system-RIS--RAG).

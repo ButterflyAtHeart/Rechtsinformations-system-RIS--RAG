@@ -1,15 +1,3 @@
-# Large SQL File Notice
-
-The `init.sql` file required for database initialization is **not included** in this repository due to its large size (~700 MB).
-
-Please download `init.sql` from the provided cloud storage link and place it in the project root directory:
-
-- [Download init.sql](https://drive.google.com/file/d/1p0VgDHZVYiHBNqqZFghk_gEKrQWgyWh1/view?usp=sharing)
-
-After downloading, you can start the application as described below.
-
----
-
 # Rechtsinformations­system(RIS) RAG
 
 RIS RAG is a Retrieval-Augmented Generation (RAG) application for legal document search and question answering, leveraging PostgreSQL with pgvector for vector search and LLMs for natural language understanding.
@@ -36,6 +24,7 @@ RIS RAG is a Retrieval-Augmented Generation (RAG) application for legal document
 - Docker & Docker Compose
 - Python 3.10+
 
+
 ### Environment Variables
 Create a `.env` file with the following variables:
 ```
@@ -44,6 +33,15 @@ DB_PASSWORD=your_db_password
 DB_NAME=your_db_name
 IONOS_TOKEN=your_ionos_api_token
 ```
+### Large SQL File Notice
+
+The `init.sql` file required for database initialization is **not included** in this repository due to its large size (~700 MB).
+
+Please download `init.sql` from the provided cloud storage link and place it in the project root directory:
+
+- [Download init.sql](https://drive.google.com/file/d/1p0VgDHZVYiHBNqqZFghk_gEKrQWgyWh1/view?usp=sharing)
+
+
 
 ### Start the Application
 1. Build and start containers:

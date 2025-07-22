@@ -17,7 +17,7 @@ api_token = os.getenv('IONOS_TOKEN')
 
 # Database connection parameters
 db_params = {
-    'host': os.environ.get("DB_HOST", "db"),  
+    'host': os.environ.get("DB_HOST", "localhost"),  
     'database': os.environ.get("DB_NAME", "default_df"),
     'username': os.environ.get("DB_USER", "default_user"),
     'password': os.environ.get("DB_PASSWORD", "default_password"),
@@ -51,6 +51,7 @@ llm_llama = dspy.LM(
     "openai/meta-llama/Llama-3.3-70B-Instruct",
     base_url="https://openai.inference.de-txl.ionos.com/v1",
     api_key=api_token,
+    cache = False,
 )
 embedder = dspy.Embedder(
     "openai/BAAI/bge-m3",
@@ -86,6 +87,13 @@ def auth_callback(username: str, password: str):
 async def start_chat():
     """Initialize message history on chat start."""
     cl.user_session.set("message_history", [])
+    await cl.Message(
+        content="""Hallo, ich bin ein Chatbot, mit dem man einfach Informationen in Gesetzestexten suchen kann. Aktuell sind ca. 2500 Gesetzestexte und Verordnungen in der Datenbank. Mögliche Fragen können zum Beispiel sein: 
+                    - Wann darf ein Asylbewerber arbeiten?
+                    - Wie hoch ist die Rente?
+                    - Was ist Raub?
+                    - Welche Strafe gibt es für Falschparken?            
+        """).send()
 
 
 async def show_stream(output_stream, text_elements: Optional[list[cl.Text]] = None):
@@ -121,13 +129,24 @@ async def main(message: cl.Message):
     relevant_laws = session.scalars(
         select(Document).order_by(Document.embedding.l2_distance(query_vector)).limit(k)
     ).all()
+
+    # Retrieve top-k relevant articles, in case the law name is not similar enough
+    relevant_articles = session.scalars(
+        select(Article).order_by(Article.embedding.l2_distance(query_vector)).limit(k)
+    ).all()
+
+    # Add found articles' documents to relevant laws if not already included
+    for article in relevant_articles:
+        if article.document.uri not in [r.uri for r in relevant_laws]:
+            relevant_laws.append(article.document)
+
     sources = [{"title": r.title} for r in relevant_laws]
+
     # For each document, retrieve top-k relevant sections
-    for i, relevant_law in enumerate(relevant_laws):
-        uri = relevant_law.uri
+    for i, doc in enumerate(relevant_laws):
         sources[i]["relevant_sections"] = session.scalars(
             select(Article)
-            .where(Article.document_uri == uri)
+            .where(Article.document_uri == doc.uri)
             .order_by(Article.embedding.l2_distance(query_vector))
             .limit(k)
         ).all()
@@ -143,7 +162,7 @@ async def main(message: cl.Message):
                 display="side"
             )
         )
-    print(text_elements)
+
     # Generate response using the predictor
     stream = dspy.streamify(predictor, stream_listeners=[dspy.streaming.StreamListener(signature_field_name="answer")],)
     answer = await show_stream(stream(message_history=message_history, sources=sources), text_elements=text_elements)
